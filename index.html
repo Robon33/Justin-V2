@@ -211,9 +211,13 @@
         <p>Justin Café s'installe en plein cœur de Bordeaux, sur l'une des plus grandes places d'Europe. Un emplacement choisi pour son passage — actifs du quartier, touristes, étudiants — et pour incarner dès l'ouverture l'esprit du concept : au carrefour du patrimoine bordelais et d'une restauration pensée pour aujourd'hui.</p>
         <p>Les travaux avancent, l'équipe se forme, la carte se finalise. Suivez l'avancée du chantier sur nos réseaux et réservez déjà votre table pour les premiers jours.</p>
         <ul class="ouverture-infos">
-          <li><strong>Adresse</strong> — Pavillon des Quinconces, Bordeaux</li>
+          <li><strong>Adresse</strong> — Pavillon des Quinconces, Bordeaux (ancien Relais H, entre les deux arrêts de tram)</li>
           <li><strong>Ouverture</strong> — Mi-juillet 2026</li>
         </ul>
+        <div class="acces-grid">
+          <div class="acces-item"><span class="acces-icon">📍</span><div><strong>Adresse</strong><br>Pavillon des Quinconces, à côté des bureaux TBM</div></div>
+          <div class="acces-item"><span class="acces-icon">🚊</span><div><strong>Tram</strong><br>Lignes A &amp; B, arrêt Quinconces</div></div>
+        </div>
       </div>
       <div class="ouverture-map">
         <iframe
@@ -236,8 +240,37 @@
       </div>
       <button id="orderModalClose" class="cart-close" aria-label="Fermer">✕</button>
     </div>
-    <div class="cc-tabs" id="ccTabs"></div>
-    <div class="cc-grid" id="ccGrid"></div>
+
+    <div class="cc-mode-toggle" role="group" aria-label="Sur place ou à emporter">
+      <button type="button" class="cc-mode-btn active" data-mode="sur-place">Sur place</button>
+      <button type="button" class="cc-mode-btn" data-mode="emporter">À emporter</button>
+    </div>
+
+    <div id="ccBrowseView">
+      <div class="cc-tabs" id="ccTabs"></div>
+      <div class="cc-grid" id="ccGrid"></div>
+    </div>
+
+    <div id="ccConfigurator" class="cc-configurator" hidden>
+      <button type="button" id="ccConfigBack" class="cc-config-back">← Retour à la carte</button>
+      <h4 id="ccConfigTitle"></h4>
+      <p class="cc-config-price" id="ccConfigPrice"></p>
+
+      <div class="cc-config-field">
+        <label for="ccConfigPlat">Votre plat</label>
+        <select id="ccConfigPlat"></select>
+      </div>
+      <div class="cc-config-field">
+        <label for="ccConfigBoisson">Votre boisson</label>
+        <select id="ccConfigBoisson"></select>
+      </div>
+      <div class="cc-config-field" id="ccConfigDessertField">
+        <label for="ccConfigDessert">Votre dessert</label>
+        <select id="ccConfigDessert"></select>
+      </div>
+
+      <button type="button" id="ccConfigAdd" class="btn btn-dark btn-submit">Ajouter au panier</button>
+    </div>
   </div>
 
   <!-- Floating cart button -->

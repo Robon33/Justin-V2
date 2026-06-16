@@ -138,8 +138,34 @@ const MENU_ITEMS = [
   { id: 'boissons-froides-orange-pressee', cat: 'boissons-froides', icon: '🧃', name: 'Orange Pressée', price: 5.5 },
 ];
 
+// Formules : prix fixe quelle que soit la composition choisie (comme sur la borne).
+const FORMULES_CONFIG = {
+  'formules-plat-boisson': { needsDessert: false },
+  'formules-plat-boisson-dessert': { needsDessert: true },
+  'formules-etudiante': { needsDessert: false },
+  'formules-tbm': { needsDessert: false },
+};
+
+const PLAT_CATEGORIES = ['sandwichs', 'salades', 'snacking'];
+
 let activeCategory = 'formules';
-const cart = {}; // { itemId: qty }
+let diningMode = 'sur-place';
+// cart[lineId] = { name, price, icon, qty }
+const cart = {};
+
+function formatPrice(n) {
+  return n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+}
+
+function addToCart(lineId, { name, price, icon }) {
+  if (!cart[lineId]) cart[lineId] = { name, price, icon, qty: 0 };
+  cart[lineId].qty += 1;
+}
+function removeFromCart(lineId) {
+  if (!cart[lineId]) return;
+  cart[lineId].qty -= 1;
+  if (cart[lineId].qty <= 0) delete cart[lineId];
+}
 
 function renderCategoryTabs() {
   const tabsEl = document.getElementById('ccTabs');
@@ -156,16 +182,13 @@ function renderCategoryTabs() {
   });
 }
 
-function formatPrice(n) {
-  return n.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-}
-
 function renderMenuGrid() {
   const grid = document.getElementById('ccGrid');
   const items = MENU_ITEMS.filter(i => i.cat === activeCategory);
+  const isFormules = activeCategory === 'formules';
 
   grid.innerHTML = items.map(item => {
-    const qty = cart[item.id] || 0;
+    const qty = cart[item.id] ? cart[item.id].qty : 0;
     return `
       <div class="cc-card">
         <div class="cc-card-icon">${item.icon}</div>
@@ -173,13 +196,15 @@ function renderMenuGrid() {
         ${item.desc ? `<p class="cc-desc">${item.desc}</p>` : ''}
         <div class="cc-card-foot">
           <span class="cc-price">${formatPrice(item.price)}</span>
-          ${qty > 0
-            ? `<div class="cc-qty">
-                 <button data-action="dec" data-id="${item.id}" aria-label="Retirer">−</button>
-                 <span>${qty}</span>
-                 <button data-action="inc" data-id="${item.id}" aria-label="Ajouter">+</button>
-               </div>`
-            : `<button class="cc-add-btn" data-action="inc" data-id="${item.id}" aria-label="Ajouter au panier">+</button>`
+          ${isFormules
+            ? `<button class="btn btn-ghost btn-sm" data-action="configure" data-id="${item.id}">Composer</button>`
+            : (qty > 0
+                ? `<div class="cc-qty">
+                     <button data-action="dec" data-id="${item.id}" aria-label="Retirer">−</button>
+                     <span>${qty}</span>
+                     <button data-action="inc" data-id="${item.id}" aria-label="Ajouter">+</button>
+                   </div>`
+                : `<button class="cc-add-btn" data-action="inc" data-id="${item.id}" aria-label="Ajouter au panier">+</button>`)
           }
         </div>
       </div>
@@ -189,11 +214,16 @@ function renderMenuGrid() {
   grid.querySelectorAll('[data-action]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.id;
-      if (btn.dataset.action === 'inc') {
-        cart[id] = (cart[id] || 0) + 1;
+      const action = btn.dataset.action;
+      if (action === 'configure') {
+        openConfigurator(MENU_ITEMS.find(i => i.id === id));
+        return;
+      }
+      const item = MENU_ITEMS.find(i => i.id === id);
+      if (action === 'inc') {
+        addToCart(id, item);
       } else {
-        cart[id] = Math.max(0, (cart[id] || 0) - 1);
-        if (cart[id] === 0) delete cart[id];
+        removeFromCart(id);
       }
       renderMenuGrid();
       renderCart();
@@ -202,10 +232,7 @@ function renderMenuGrid() {
 }
 
 function cartItemsList() {
-  return Object.entries(cart).map(([id, qty]) => {
-    const item = MENU_ITEMS.find(i => i.id === id);
-    return { ...item, qty };
-  });
+  return Object.entries(cart).map(([id, v]) => ({ id, ...v }));
 }
 
 function cartTotal() {
@@ -213,7 +240,7 @@ function cartTotal() {
 }
 
 function cartCount() {
-  return Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+  return cartItemsList().reduce((sum, i) => sum + i.qty, 0);
 }
 
 function renderCart() {
@@ -250,10 +277,9 @@ function renderCart() {
       btn.addEventListener('click', () => {
         const id = btn.dataset.id;
         if (btn.dataset.action === 'inc') {
-          cart[id] = (cart[id] || 0) + 1;
+          addToCart(id, cart[id]);
         } else {
-          cart[id] = Math.max(0, (cart[id] || 0) - 1);
-          if (cart[id] === 0) delete cart[id];
+          removeFromCart(id);
         }
         renderCart();
         renderMenuGrid();
@@ -292,9 +318,17 @@ function initClickAndCollect() {
   const orderModal = document.getElementById('orderModal');
   const orderModalOverlay = document.getElementById('orderModalOverlay');
   const orderModalClose = document.getElementById('orderModalClose');
+  const ccBrowseView = document.getElementById('ccBrowseView');
+  const ccConfigurator = document.getElementById('ccConfigurator');
+
+  function showBrowseView() {
+    ccConfigurator.hidden = true;
+    ccBrowseView.hidden = false;
+  }
 
   function openOrderModal(category) {
     closeCart();
+    showBrowseView();
     if (category) {
       activeCategory = category;
       renderCategoryTabs();
@@ -320,6 +354,78 @@ function initClickAndCollect() {
     }
   });
 
+  // ===== Sur place / À emporter toggle =====
+  document.querySelectorAll('.cc-mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      diningMode = btn.dataset.mode;
+      document.querySelectorAll('.cc-mode-btn').forEach(b => b.classList.toggle('active', b === btn));
+    });
+  });
+
+  // ===== Formule configurator =====
+  const configBack = document.getElementById('ccConfigBack');
+  const configTitle = document.getElementById('ccConfigTitle');
+  const configPrice = document.getElementById('ccConfigPrice');
+  const configPlat = document.getElementById('ccConfigPlat');
+  const configBoisson = document.getElementById('ccConfigBoisson');
+  const configDessertField = document.getElementById('ccConfigDessertField');
+  const configDessert = document.getElementById('ccConfigDessert');
+  const configAdd = document.getElementById('ccConfigAdd');
+
+  let currentFormula = null;
+
+  function optionsFor(cat) {
+    return MENU_ITEMS.filter(i => i.cat === cat)
+      .map(i => `<option value="${i.id}">${i.name} ${i.price > 0 ? '(' + formatPrice(i.price) + ' à la carte)' : ''}</option>`)
+      .join('');
+  }
+
+  function openConfigurator(formula) {
+    currentFormula = formula;
+    const config = FORMULES_CONFIG[formula.id] || { needsDessert: false };
+
+    configTitle.textContent = formula.name;
+    configPrice.textContent = `${formatPrice(formula.price)} — prix fixe quel que soit votre choix`;
+
+    configPlat.innerHTML = PLAT_CATEGORIES.map(cat => {
+      const items = MENU_ITEMS.filter(i => i.cat === cat);
+      const label = MENU_CATEGORIES.find(c => c.id === cat)?.label || cat;
+      return `<optgroup label="${label}">${items.map(i => `<option value="${i.id}">${i.name}</option>`).join('')}</optgroup>`;
+    }).join('');
+
+    configBoisson.innerHTML = optionsFor('boissons-froides');
+    configDessertField.style.display = config.needsDessert ? '' : 'none';
+    if (config.needsDessert) configDessert.innerHTML = optionsFor('sucre');
+
+    ccBrowseView.hidden = true;
+    ccConfigurator.hidden = false;
+  }
+
+  configBack.addEventListener('click', showBrowseView);
+
+  configAdd.addEventListener('click', () => {
+    if (!currentFormula) return;
+    const config = FORMULES_CONFIG[currentFormula.id] || { needsDessert: false };
+
+    const platItem = MENU_ITEMS.find(i => i.id === configPlat.value);
+    const boissonItem = MENU_ITEMS.find(i => i.id === configBoisson.value);
+    const dessertItem = config.needsDessert ? MENU_ITEMS.find(i => i.id === configDessert.value) : null;
+
+    const parts = [platItem.name, boissonItem.name];
+    if (dessertItem) parts.push(dessertItem.name);
+
+    const lineId = `${currentFormula.id}__${platItem.id}__${boissonItem.id}__${dessertItem ? dessertItem.id : ''}`;
+    addToCart(lineId, {
+      name: `${currentFormula.name} — ${parts.join(' + ')}`,
+      price: currentFormula.price,
+      icon: currentFormula.icon,
+    });
+
+    renderCart();
+    showBrowseView();
+    renderMenuGrid();
+  });
+
   const orderForm = document.getElementById('orderForm');
   const orderStatus = document.getElementById('orderStatus');
   const orderSubmitBtn = document.getElementById('orderSubmitBtn');
@@ -336,6 +442,7 @@ function initClickAndCollect() {
     const formData = Object.fromEntries(new FormData(orderForm).entries());
     const payload = {
       ...formData,
+      diningMode,
       items: cartItemsList().map(i => ({ name: i.name, qty: i.qty, price: i.price })),
       total: cartTotal(),
     };

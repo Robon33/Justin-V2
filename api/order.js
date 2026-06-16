@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, phone, date, time, items, total } = req.body || {};
+  const { name, email, phone, date, time, items, total, diningMode } = req.body || {};
 
   if (!name || !email || !phone || !date || !time || !Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -31,11 +31,14 @@ export default async function handler(req, res) {
     `<tr><td style="padding:4px 8px;">${escapeHtml(i.name)}</td><td style="padding:4px 8px;">× ${escapeHtml(String(i.qty))}</td><td style="padding:4px 8px;">${Number(i.price * i.qty).toFixed(2)} €</td></tr>`
   ).join('');
 
+  const modeLabel = diningMode === 'emporter' ? 'À emporter' : 'Sur place';
+
   const html = `
     <h2>Nouvelle commande Click &amp; Collect — Justin Café</h2>
     <p><strong>Client :</strong> ${escapeHtml(name)}</p>
     <p><strong>Email :</strong> ${escapeHtml(email)}</p>
     <p><strong>Téléphone :</strong> ${escapeHtml(phone)}</p>
+    <p><strong>Mode :</strong> ${escapeHtml(modeLabel)}</p>
     <p><strong>Retrait :</strong> ${escapeHtml(date)} à ${escapeHtml(time)}</p>
     <table style="border-collapse:collapse; margin-top:1em;">${itemsRows}</table>
     <p style="margin-top:1em;"><strong>Total : ${Number(total).toFixed(2)} €</strong> (paiement sur place)</p>
@@ -52,7 +55,7 @@ export default async function handler(req, res) {
         from,
         to,
         reply_to: email,
-        subject: `Commande Click & Collect — ${name} (retrait ${date} ${time})`,
+        subject: `Commande Click & Collect — ${name} (${modeLabel}, retrait ${date} ${time})`,
         html,
       }),
     });

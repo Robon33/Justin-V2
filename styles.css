@@ -376,6 +376,48 @@ body.site-active{overflow-x:hidden;}
 .order-modal-head h3{margin:0 0 .3em; font-size:1.3rem;}
 .order-modal-sub{margin:0; color:var(--brown-mid); font-size:.88rem;}
 
+.cc-mode-toggle{
+  display:flex;
+  gap:.5rem;
+  background:var(--cream-2);
+  border-radius:999px;
+  padding:.3rem;
+  margin-bottom:1.6rem;
+  width:fit-content;
+}
+.cc-mode-btn{
+  border:none;
+  background:transparent;
+  padding:.5em 1.2em;
+  border-radius:999px;
+  font-size:.85rem;
+  font-weight:600;
+  color:var(--brown-mid);
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.cc-mode-btn.active{background:var(--brown-dark); color:var(--white);}
+
+.cc-configurator{padding-top:.4rem;}
+.cc-config-back{
+  background:none; border:none; color:var(--taupe);
+  font-size:.85rem; cursor:pointer; padding:0; margin-bottom:1.2rem;
+}
+.cc-config-back:hover{color:var(--brown-dark);}
+.cc-configurator h4{font-family:var(--serif); font-size:1.3rem; margin:0 0 .2em;}
+.cc-config-price{font-family:var(--serif); font-weight:600; color:var(--taupe); margin:0 0 1.4rem;}
+.cc-config-field{margin-bottom:1.1rem; display:flex; flex-direction:column;}
+.cc-config-field label{font-size:.85rem; font-weight:600; margin-bottom:.4em; color:var(--brown-mid);}
+.cc-config-field select{
+  font-family:var(--sans);
+  font-size:.95rem;
+  padding:.7em .9em;
+  border:1.5px solid #e3d9cd;
+  border-radius:10px;
+  background:var(--white);
+  color:var(--brown-dark);
+}
+
 .link-btn{
   background:none;
   border:none;
@@ -567,6 +609,24 @@ body.site-active{overflow-x:hidden;}
 .ouverture-text p{color:var(--brown-mid);}
 .ouverture-infos{margin-top:1.6rem; display:flex; flex-direction:column; gap:.6rem;}
 .ouverture-infos li{font-size:.95rem;}
+.acces-grid{
+  margin-top:1.8rem;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+.acces-item{
+  display:flex;
+  align-items:flex-start;
+  gap:.7rem;
+  font-size:.88rem;
+  color:var(--brown-mid);
+  background:var(--white);
+  border-radius:10px;
+  padding:.9rem 1rem;
+}
+.acces-item strong{color:var(--brown-dark); display:block; margin-bottom:.15em;}
+.acces-icon{font-size:1.2rem; line-height:1;}
 .ouverture-map{
   border-radius:var(--radius);
   overflow:hidden;
@@ -666,4 +726,5 @@ body.site-active{overflow-x:hidden;}
   .cart-fab{bottom:1.2rem; right:1.2rem;}
   .order-modal{padding:1.4rem; max-height:90vh;}
   .order-modal .cc-grid{grid-template-columns:1fr;}
+  .acces-grid{grid-template-columns:1fr;}
 }
