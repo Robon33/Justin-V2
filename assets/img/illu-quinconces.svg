@@ -1,0 +1,30 @@
+<svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="320" fill="none"/>
+  <line x1="0" y1="260" x2="600" y2="260" stroke="#7f716b" stroke-width="2" opacity="0.4"/>
+  <!-- colonne rostrale gauche -->
+  <g stroke="#30221d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="118" y="90" width="14" height="150" rx="2"/>
+    <circle cx="125" cy="78" r="14"/>
+    <line x1="100" y1="240" x2="150" y2="240"/>
+  </g>
+  <!-- colonne rostrale droite -->
+  <g stroke="#30221d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="468" y="90" width="14" height="150" rx="2"/>
+    <circle cx="475" cy="78" r="14"/>
+    <line x1="450" y1="240" x2="500" y2="240"/>
+  </g>
+  <!-- monument central des Quinconces -->
+  <g stroke="#30221d" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="270" y="60" width="60" height="180" rx="3"/>
+    <path d="M270 60 q30 -22 60 0" />
+    <line x1="250" y1="240" x2="350" y2="240"/>
+    <circle cx="300" cy="40" r="10"/>
+  </g>
+  <!-- silhouettes d'arbres -->
+  <g fill="#7f716b" opacity="0.5">
+    <ellipse cx="60" cy="220" rx="22" ry="34"/>
+    <ellipse cx="540" cy="220" rx="22" ry="34"/>
+    <ellipse cx="190" cy="232" rx="16" ry="24"/>
+    <ellipse cx="410" cy="232" rx="16" ry="24"/>
+  </g>
+</svg>

@@ -1,7 +1,8 @@
 // ===== Click & Collect — menu data =====
-// Carte officielle Justin Café (export borne/POS). Alcool, menus combos et suppléments
+// Carte officielle Justin Café (export borne/POS). Alcool et suppléments
 // volontairement exclus de cette v1 du click & collect en ligne.
 const MENU_CATEGORIES = [
+  { id: 'formules', label: 'Nos formules' },
   { id: 'sandwichs', label: 'Sandwichs' },
   { id: 'salades', label: 'Salades' },
   { id: 'snacking', label: 'Snacking' },
@@ -11,6 +12,10 @@ const MENU_CATEGORIES = [
 ];
 
 const MENU_ITEMS = [
+  { id: 'formules-plat-boisson', cat: 'formules', icon: '🍽️', name: 'Plat + Boisson', desc: 'Un plat au choix + une boisson.', price: 8.5 },
+  { id: 'formules-plat-boisson-dessert', cat: 'formules', icon: '🍽️', name: 'Plat + Boisson + Dessert', desc: 'La formule complète : plat, boisson et dessert.', price: 12.5 },
+  { id: 'formules-etudiante', cat: 'formules', icon: '🎓', name: 'Formule Étudiante', desc: 'Tarif préférentiel sur présentation de la carte étudiante.', price: 9.8 },
+  { id: 'formules-tbm', cat: 'formules', icon: '🚋', name: 'Formule TBM', desc: 'Pensée pour les actifs et usagers du réseau de transport.', price: 9.8 },
   { id: 'sandwichs-poire-boeuf-pesto', cat: 'sandwichs', icon: '🥪', name: 'Poire Bœuf Pesto', price: 11.5 },
   { id: 'sandwichs-tartare-oeuf-confit', cat: 'sandwichs', icon: '🥪', name: 'Tartare Œuf Confit', price: 13.5 },
   { id: 'sandwichs-poulet-pane-tonkatsu', cat: 'sandwichs', icon: '🥪', name: 'Poulet Pané Tonkatsu', price: 11.5 },
@@ -133,7 +138,7 @@ const MENU_ITEMS = [
   { id: 'boissons-froides-orange-pressee', cat: 'boissons-froides', icon: '🧃', name: 'Orange Pressée', price: 5.5 },
 ];
 
-let activeCategory = 'sandwichs';
+let activeCategory = 'formules';
 const cart = {}; // { itemId: qty }
 
 function renderCategoryTabs() {
@@ -270,6 +275,7 @@ function initClickAndCollect() {
   const cartClose = document.getElementById('cartClose');
 
   function openCart() {
+    closeOrderModal();
     cartDrawer.classList.add('open');
     cartOverlay.classList.add('open');
   }
@@ -281,6 +287,38 @@ function initClickAndCollect() {
   cartButton.addEventListener('click', openCart);
   cartClose.addEventListener('click', closeCart);
   cartOverlay.addEventListener('click', closeCart);
+
+  // ===== Click & Collect catalog — pop-up modal =====
+  const orderModal = document.getElementById('orderModal');
+  const orderModalOverlay = document.getElementById('orderModalOverlay');
+  const orderModalClose = document.getElementById('orderModalClose');
+
+  function openOrderModal(category) {
+    closeCart();
+    if (category) {
+      activeCategory = category;
+      renderCategoryTabs();
+      renderMenuGrid();
+    }
+    orderModal.classList.add('open');
+    orderModalOverlay.classList.add('open');
+  }
+  function closeOrderModal() {
+    orderModal.classList.remove('open');
+    orderModalOverlay.classList.remove('open');
+  }
+
+  document.querySelectorAll('.js-open-order').forEach(btn => {
+    btn.addEventListener('click', () => openOrderModal(btn.dataset.cat));
+  });
+  orderModalClose.addEventListener('click', closeOrderModal);
+  orderModalOverlay.addEventListener('click', closeOrderModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeOrderModal();
+      closeCart();
+    }
+  });
 
   const orderForm = document.getElementById('orderForm');
   const orderStatus = document.getElementById('orderStatus');

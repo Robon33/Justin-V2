@@ -206,6 +206,48 @@ body.site-active{overflow-x:hidden;}
 }
 .concept-card h3{font-size:1.2rem; margin-bottom:.5em;}
 .concept-card p{color:var(--brown-mid); margin:0; font-size:.95rem;}
+.concept-icon{width:46px; height:46px; margin-bottom:1rem; opacity:.9;}
+.concept-icon-wide{width:72px; height:auto;}
+
+/* ===== Formules ===== */
+.formules{max-width:900px; margin:0 auto;}
+.formules-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.6rem;
+}
+.formule-card{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:2.2rem 1.8rem;
+  box-shadow:var(--shadow);
+  text-align:center;
+  border:1.5px solid transparent;
+}
+.formule-card.highlight{border-color:var(--brown-dark); position:relative;}
+.formule-card.highlight::before{
+  content:"Le plus complet";
+  position:absolute;
+  top:-12px; left:50%;
+  transform:translateX(-50%);
+  background:var(--brown-dark);
+  color:var(--white);
+  font-size:.7rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  padding:.3em .9em;
+  border-radius:999px;
+}
+.formule-icon{width:48px; height:48px; margin-bottom:1rem;}
+.formule-card h3{font-size:1.15rem; margin-bottom:.5em;}
+.formule-card p{color:var(--brown-mid); font-size:.9rem; margin-bottom:1rem;}
+.formule-price{
+  display:block;
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.5rem;
+  margin-bottom:1.2rem;
+}
 
 /* ===== Offre ===== */
 .offre{background:var(--brown-dark); color:var(--white);}
@@ -300,8 +342,56 @@ body.site-active{overflow-x:hidden;}
 .horaire-card p:not(.horaire-time){font-size:.88rem; color:var(--brown-mid); margin:0;}
 .horaire-card.highlight p:not(.horaire-time){color:rgba(255,255,255,.85);}
 
-/* ===== Click & Collect ===== */
-.click-collect{max-width:1180px; margin:0 auto;}
+/* ===== Click & Collect — modale ===== */
+.order-modal{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%, -50%) scale(.96);
+  width:min(92vw, 760px);
+  max-height:84vh;
+  background:var(--cream);
+  border-radius:var(--radius);
+  box-shadow:0 30px 70px -20px rgba(48,34,29,.5);
+  z-index:96;
+  padding:2rem;
+  overflow-y:auto;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease, visibility .25s ease;
+}
+.order-modal.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(-50%, -50%) scale(1);
+}
+.order-modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:1.6rem;
+}
+.order-modal-head h3{margin:0 0 .3em; font-size:1.3rem;}
+.order-modal-sub{margin:0; color:var(--brown-mid); font-size:.88rem;}
+
+.link-btn{
+  background:none;
+  border:none;
+  font: inherit;
+  font-size:.92rem;
+  font-weight:500;
+  color:var(--brown-dark);
+  cursor:pointer;
+  padding:0;
+}
+.link-btn:hover{color:var(--taupe);}
+
+.ouverture-illu{width:160px; margin-bottom:1.2rem; opacity:.9;}
+
+.order-modal .cc-grid{grid-template-columns:repeat(2, 1fr);}
+
 .cc-tabs{
   display:flex;
   flex-wrap:wrap;
@@ -541,6 +631,7 @@ body.site-active{overflow-x:hidden;}
   .horaires-grid{grid-template-columns:1fr 1fr;}
   .cc-grid{grid-template-columns:1fr 1fr;}
   .sandwich-grid{grid-template-columns:1fr 1fr;}
+  .formules-grid{grid-template-columns:1fr;}
   .experience-steps{grid-template-columns:1fr 1fr;}
   .ouverture-grid{grid-template-columns:1fr;}
   .header-nav{
@@ -573,4 +664,6 @@ body.site-active{overflow-x:hidden;}
   .reservation-form{padding:1.8rem 1.4rem;}
   .order-form .form-row{grid-template-columns:1fr;}
   .cart-fab{bottom:1.2rem; right:1.2rem;}
+  .order-modal{padding:1.4rem; max-height:90vh;}
+  .order-modal .cc-grid{grid-template-columns:1fr;}
 }

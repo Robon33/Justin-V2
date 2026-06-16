@@ -36,7 +36,7 @@
       <a href="#concept">Le concept</a>
       <a href="#offre">La carte</a>
       <a href="#horaires">Horaires</a>
-      <a href="#commander">Click &amp; Collect</a>
+      <button type="button" class="link-btn js-open-order">Click &amp; Collect</button>
       <a href="#reservation" class="btn btn-dark btn-sm">Réserver</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
@@ -47,9 +47,9 @@
     <div class="hero-inner">
       <img src="assets/img/JUSTIN_LOGO_ILLU_JUSTIN_MARRON.svg" alt="" class="hero-illu" />
       <h1>Le bon pain,<br>le vrai café,<br>en deux minutes.</h1>
-      <p class="hero-sub">Justin Café ouvre bientôt à Bordeaux. Un nouveau format de restauration rapide à l'ADN profondément français — entre boulangerie, café de quartier et snacking premium.</p>
+      <p class="hero-sub">Justin Café ouvre bientôt à Bordeaux. Un nouveau format de restauration rapide à l'ADN profondément français — entre boulangerie, café de quartier et snacking premium. Pensé pour les actifs pressés, les amoureux du bon café et tous ceux qui n'ont pas envie de choisir entre rapidité et qualité.</p>
       <div class="hero-cta">
-        <a href="#commander" class="btn btn-dark">Commander en click &amp; collect</a>
+        <button type="button" class="btn btn-dark js-open-order">Commander en click &amp; collect</button>
         <a href="#reservation" class="btn btn-ghost">Réserver une table</a>
       </div>
     </div>
@@ -60,19 +60,48 @@
     <div class="section-head">
       <span class="eyebrow">Le concept</span>
       <h2>Un fast casual qui ne sacrifie rien</h2>
+      <p class="section-sub">Justin Café est né d'un constat simple : la restauration rapide n'a pas besoin d'être industrielle pour être rapide. Entre la sandwicherie low-cost et le restaurant traditionnel, il manquait un lieu où l'on mange bien, vite, et où l'on a aussi envie de s'arrêter pour un café ou un verre. C'est exactement cet espace que nous occupons.</p>
     </div>
     <div class="concept-grid">
       <div class="concept-card">
+        <img src="assets/img/illu-coffee.svg" alt="" class="concept-icon" />
         <h3>Vite, mais bien</h3>
-        <p>Un service pensé pour les actifs et les clients de passage : commande rapide, exécution cadrée, sans tomber dans l'offre industrielle.</p>
+        <p>Un service pensé pour les actifs et les clients de passage : commande rapide, exécution cadrée, sans tomber dans l'offre industrielle. Chaque produit est préparé à la minute, jamais en série.</p>
       </div>
       <div class="concept-card">
+        <img src="assets/img/illu-sandwich.svg" alt="" class="concept-icon" />
         <h3>Gourmand &amp; français</h3>
-        <p>Du bon pain, une carte lisible, une vraie culture du café. Justin Café revendique une identité française forte, moderne et accessible.</p>
+        <p>Du bon pain, une carte lisible, une vraie culture du café. Justin Café revendique une identité française forte, moderne et accessible — sans jargon, sans chichi, juste de bons produits.</p>
       </div>
       <div class="concept-card">
+        <img src="assets/img/illu-quinconces.svg" alt="" class="concept-icon concept-icon-wide" />
         <h3>Premier d'une série</h3>
-        <p>Bordeaux est le site pilote. Un concept pensé dès le départ pour être dupliqué, avec une exploitation structurée et reproductible.</p>
+        <p>Bordeaux est le site pilote. Un concept pensé dès le départ pour être dupliqué, avec une exploitation structurée et reproductible — process, bornes de commande et organisation pensés pour tenir la cadence partout où Justin Café s'installera ensuite.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULES -->
+  <section id="formules" class="section formules">
+    <div class="section-head">
+      <span class="eyebrow">Nos formules</span>
+      <h2>Une formule pour chaque rythme de journée</h2>
+      <p class="section-sub">Pas envie de composer votre commande produit par produit ? Nos formules combinent plat, boisson et dessert à un prix avantageux — à commander en click &amp; collect ou sur place.</p>
+    </div>
+    <div class="formules-grid">
+      <div class="formule-card">
+        <img src="assets/img/illu-sandwich.svg" alt="" class="formule-icon" />
+        <h3>Plat + Boisson</h3>
+        <p>Un plat au choix dans notre carte, accompagné d'une boisson. Simple, complet, parfait pour une pause rapide.</p>
+        <span class="formule-price">8,50 €</span>
+        <button type="button" class="btn btn-ghost btn-sm js-open-order" data-cat="formules">Commander</button>
+      </div>
+      <div class="formule-card highlight">
+        <img src="assets/img/illu-coffee.svg" alt="" class="formule-icon" />
+        <h3>Plat + Boisson + Dessert</h3>
+        <p>La formule complète : un plat, une boisson, et une touche sucrée pour finir le repas en beauté.</p>
+        <span class="formule-price">12,50 €</span>
+        <button type="button" class="btn btn-dark btn-sm js-open-order" data-cat="formules">Commander</button>
       </div>
     </div>
   </section>
@@ -123,7 +152,7 @@
     </div>
     <p class="offre-note">Et bien sûr les classiques — Jambon Beurre, Poulet Mayo, Thon Mayo — dès 8€.<br>Salades, snacking, desserts et boissons : carte complète en click &amp; collect.</p>
     <div class="offre-cta">
-      <a href="#commander" class="btn btn-outline-light">Voir toute la carte</a>
+      <button type="button" class="btn btn-outline-light js-open-order">Voir toute la carte</button>
     </div>
   </section>
 
@@ -162,6 +191,7 @@
     <div class="section-head">
       <span class="eyebrow">L'expérience</span>
       <h2>Pensé pour aller vite, sans perdre en clarté</h2>
+      <p class="section-sub">De la commande à la remise du plateau, chaque étape est pensée pour que vous repartiez vite — sans avoir l'impression d'avoir été traité comme un numéro. Le parcours est le même que vous commandiez en borne, en caisse ou en click &amp; collect.</p>
     </div>
     <div class="experience-steps">
       <div class="step"><span class="step-n">01</span><h3>Sur place ou à emporter</h3><p>Le client choisit dès l'arrivée, en borne ou en caisse.</p></div>
@@ -175,9 +205,11 @@
   <section id="ouverture" class="section ouverture">
     <div class="ouverture-grid">
       <div class="ouverture-text">
+        <img src="assets/img/illu-quinconces.svg" alt="" class="ouverture-illu" />
         <span class="eyebrow">Ouverture</span>
         <h2>Mi-juillet, au Pavillon des Quinconces</h2>
-        <p>Justin Café s'installe en plein cœur de Bordeaux, place des Quinconces. Suivez l'avancée des travaux et réservez votre table pour les premiers jours d'ouverture.</p>
+        <p>Justin Café s'installe en plein cœur de Bordeaux, sur l'une des plus grandes places d'Europe. Un emplacement choisi pour son passage — actifs du quartier, touristes, étudiants — et pour incarner dès l'ouverture l'esprit du concept : au carrefour du patrimoine bordelais et d'une restauration pensée pour aujourd'hui.</p>
+        <p>Les travaux avancent, l'équipe se forme, la carte se finalise. Suivez l'avancée du chantier sur nos réseaux et réservez déjà votre table pour les premiers jours.</p>
         <ul class="ouverture-infos">
           <li><strong>Adresse</strong> — Pavillon des Quinconces, Bordeaux</li>
           <li><strong>Ouverture</strong> — Mi-juillet 2026</li>
@@ -194,17 +226,19 @@
     </div>
   </section>
 
-  <!-- CLICK & COLLECT -->
-  <section id="commander" class="section click-collect">
-    <div class="section-head">
-      <span class="eyebrow">Click &amp; Collect</span>
-      <h2>Commandez, on prépare, vous récupérez</h2>
-      <p class="section-sub">Choisissez vos produits, un créneau de retrait, et réglez directement sur place. Carte provisoire — à venir : la carte définitive.</p>
+  <!-- CLICK & COLLECT — pop-up -->
+  <div id="orderModalOverlay" class="cart-overlay"></div>
+  <div id="orderModal" class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+    <div class="order-modal-head">
+      <div>
+        <h3 id="orderModalTitle">Click &amp; Collect</h3>
+        <p class="order-modal-sub">Choisissez vos produits, un créneau de retrait, réglez sur place.</p>
+      </div>
+      <button id="orderModalClose" class="cart-close" aria-label="Fermer">✕</button>
     </div>
-
     <div class="cc-tabs" id="ccTabs"></div>
     <div class="cc-grid" id="ccGrid"></div>
-  </section>
+  </div>
 
   <!-- Floating cart button -->
   <button id="cartButton" class="cart-fab" aria-label="Voir le panier">
