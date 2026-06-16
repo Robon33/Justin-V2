@@ -231,6 +231,75 @@ function renderMenuGrid() {
   });
 }
 
+// ===== Formule configurator (scope global : appelé depuis renderMenuGrid) =====
+let currentFormula = null;
+
+function optionsFor(cat) {
+  return MENU_ITEMS.filter(i => i.cat === cat)
+    .map(i => `<option value="${i.id}">${i.name} ${i.price > 0 ? '(' + formatPrice(i.price) + ' à la carte)' : ''}</option>`)
+    .join('');
+}
+
+function showBrowseView() {
+  document.getElementById('ccConfigurator').hidden = true;
+  document.getElementById('ccBrowseView').hidden = false;
+}
+
+function openConfigurator(formula) {
+  currentFormula = formula;
+  const config = FORMULES_CONFIG[formula.id] || { needsDessert: false };
+
+  const configTitle = document.getElementById('ccConfigTitle');
+  const configPrice = document.getElementById('ccConfigPrice');
+  const configPlat = document.getElementById('ccConfigPlat');
+  const configBoisson = document.getElementById('ccConfigBoisson');
+  const configDessertField = document.getElementById('ccConfigDessertField');
+  const configDessert = document.getElementById('ccConfigDessert');
+
+  configTitle.textContent = formula.name;
+  configPrice.textContent = `${formatPrice(formula.price)} — prix fixe quel que soit votre choix`;
+
+  configPlat.innerHTML = PLAT_CATEGORIES.map(cat => {
+    const items = MENU_ITEMS.filter(i => i.cat === cat);
+    const label = MENU_CATEGORIES.find(c => c.id === cat)?.label || cat;
+    return `<optgroup label="${label}">${items.map(i => `<option value="${i.id}">${i.name}</option>`).join('')}</optgroup>`;
+  }).join('');
+
+  configBoisson.innerHTML = optionsFor('boissons-froides');
+  configDessertField.style.display = config.needsDessert ? '' : 'none';
+  if (config.needsDessert) configDessert.innerHTML = optionsFor('sucre');
+
+  document.getElementById('ccBrowseView').hidden = true;
+  document.getElementById('ccConfigurator').hidden = false;
+}
+
+function confirmConfigurator() {
+  if (!currentFormula) return;
+  const config = FORMULES_CONFIG[currentFormula.id] || { needsDessert: false };
+
+  const configPlat = document.getElementById('ccConfigPlat');
+  const configBoisson = document.getElementById('ccConfigBoisson');
+  const configDessert = document.getElementById('ccConfigDessert');
+
+  const platItem = MENU_ITEMS.find(i => i.id === configPlat.value);
+  const boissonItem = MENU_ITEMS.find(i => i.id === configBoisson.value);
+  const dessertItem = config.needsDessert ? MENU_ITEMS.find(i => i.id === configDessert.value) : null;
+
+  const parts = [platItem.name, boissonItem.name];
+  if (dessertItem) parts.push(dessertItem.name);
+
+  const lineId = `${currentFormula.id}__${platItem.id}__${boissonItem.id}__${dessertItem ? dessertItem.id : ''}`;
+  addToCart(lineId, {
+    name: `${currentFormula.name} — ${parts.join(' + ')}`,
+    price: currentFormula.price,
+    icon: currentFormula.icon,
+  });
+
+  renderCart();
+  showBrowseView();
+  renderMenuGrid();
+}
+
 function cartItemsList() {
   return Object.entries(cart).map(([id, v]) => ({ id, ...v }));
 }
@@ -318,13 +387,6 @@ function initClickAndCollect() {
   const orderModal = document.getElementById('orderModal');
   const orderModalOverlay = document.getElementById('orderModalOverlay');
   const orderModalClose = document.getElementById('orderModalClose');
-  const ccBrowseView = document.getElementById('ccBrowseView');
-  const ccConfigurator = document.getElementById('ccConfigurator');
-
-  function showBrowseView() {
-    ccConfigurator.hidden = true;
-    ccBrowseView.hidden = false;
-  }
 
   function openOrderModal(category) {
     closeCart();
@@ -363,68 +425,8 @@ function initClickAndCollect() {
   });
 
   // ===== Formule configurator =====
-  const configBack = document.getElementById('ccConfigBack');
-  const configTitle = document.getElementById('ccConfigTitle');
-  const configPrice = document.getElementById('ccConfigPrice');
-  const configPlat = document.getElementById('ccConfigPlat');
-  const configBoisson = document.getElementById('ccConfigBoisson');
-  const configDessertField = document.getElementById('ccConfigDessertField');
-  const configDessert = document.getElementById('ccConfigDessert');
-  const configAdd = document.getElementById('ccConfigAdd');
-
-  let currentFormula = null;
-
-  function optionsFor(cat) {
-    return MENU_ITEMS.filter(i => i.cat === cat)
-      .map(i => `<option value="${i.id}">${i.name} ${i.price > 0 ? '(' + formatPrice(i.price) + ' à la carte)' : ''}</option>`)
-      .join('');
-  }
-
-  function openConfigurator(formula) {
-    currentFormula = formula;
-    const config = FORMULES_CONFIG[formula.id] || { needsDessert: false };
-
-    configTitle.textContent = formula.name;
-    configPrice.textContent = `${formatPrice(formula.price)} — prix fixe quel que soit votre choix`;
-
-    configPlat.innerHTML = PLAT_CATEGORIES.map(cat => {
-      const items = MENU_ITEMS.filter(i => i.cat === cat);
-      const label = MENU_CATEGORIES.find(c => c.id === cat)?.label || cat;
-      return `<optgroup label="${label}">${items.map(i => `<option value="${i.id}">${i.name}</option>`).join('')}</optgroup>`;
-    }).join('');
-
-    configBoisson.innerHTML = optionsFor('boissons-froides');
-    configDessertField.style.display = config.needsDessert ? '' : 'none';
-    if (config.needsDessert) configDessert.innerHTML = optionsFor('sucre');
-
-    ccBrowseView.hidden = true;
-    ccConfigurator.hidden = false;
-  }
-
-  configBack.addEventListener('click', showBrowseView);
-
-  configAdd.addEventListener('click', () => {
-    if (!currentFormula) return;
-    const config = FORMULES_CONFIG[currentFormula.id] || { needsDessert: false };
-
-    const platItem = MENU_ITEMS.find(i => i.id === configPlat.value);
-    const boissonItem = MENU_ITEMS.find(i => i.id === configBoisson.value);
-    const dessertItem = config.needsDessert ? MENU_ITEMS.find(i => i.id === configDessert.value) : null;
-
-    const parts = [platItem.name, boissonItem.name];
-    if (dessertItem) parts.push(dessertItem.name);
-
-    const lineId = `${currentFormula.id}__${platItem.id}__${boissonItem.id}__${dessertItem ? dessertItem.id : ''}`;
-    addToCart(lineId, {
-      name: `${currentFormula.name} — ${parts.join(' + ')}`,
-      price: currentFormula.price,
-      icon: currentFormula.icon,
-    });
-
-    renderCart();
-    showBrowseView();
-    renderMenuGrid();
-  });
+  document.getElementById('ccConfigBack').addEventListener('click', showBrowseView);
+  document.getElementById('ccConfigAdd').addEventListener('click', confirmConfigurator);
 
   const orderForm = document.getElementById('orderForm');
   const orderStatus = document.getElementById('orderStatus');
