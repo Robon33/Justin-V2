@@ -35,8 +35,8 @@
     <nav class="header-nav">
       <a href="#concept">Le concept</a>
       <a href="#offre">La carte</a>
-      <a href="#experience">L'expérience</a>
-      <a href="#ouverture">Ouverture</a>
+      <a href="#horaires">Horaires</a>
+      <a href="#commander">Click &amp; Collect</a>
       <a href="#reservation" class="btn btn-dark btn-sm">Réserver</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
@@ -49,8 +49,8 @@
       <h1>Le bon pain,<br>le vrai café,<br>en deux minutes.</h1>
       <p class="hero-sub">Justin Café ouvre bientôt à Bordeaux. Un nouveau format de restauration rapide à l'ADN profondément français — entre boulangerie, café de quartier et snacking premium.</p>
       <div class="hero-cta">
-        <a href="#reservation" class="btn btn-dark">Réserver une table</a>
-        <a href="#concept" class="btn btn-ghost">En savoir plus</a>
+        <a href="#commander" class="btn btn-dark">Commander en click &amp; collect</a>
+        <a href="#reservation" class="btn btn-ghost">Réserver une table</a>
       </div>
     </div>
   </section>
@@ -111,6 +111,36 @@
     <p class="offre-note">Partenaires boissons : Danone · PepsiCo · Meteor</p>
   </section>
 
+  <!-- HORAIRES -->
+  <section id="horaires" class="section horaires">
+    <div class="section-head">
+      <span class="eyebrow">Horaires &amp; formules</span>
+      <h2>Ouvert tous les jours, du petit café au verre du soir</h2>
+    </div>
+    <div class="horaires-grid">
+      <div class="horaire-card">
+        <h3>Tous les jours</h3>
+        <p class="horaire-time">6h30 – 21h</p>
+        <p>Jeudi &amp; vendredi, on reste ouvert jusqu'à minuit.</p>
+      </div>
+      <div class="horaire-card highlight">
+        <h3>Happy Hour</h3>
+        <p class="horaire-time">17h – 20h</p>
+        <p>Tous les jours, sur une sélection de boissons.</p>
+      </div>
+      <div class="horaire-card">
+        <h3>Brunch</h3>
+        <p class="horaire-time">Dimanche · 10h – 16h</p>
+        <p>Une formule brunch complète, à savourer sans se presser.</p>
+      </div>
+      <div class="horaire-card highlight">
+        <h3>Aperitivo</h3>
+        <p class="horaire-time">Jeudi &amp; samedi · 18h – 21h</p>
+        <p><strong>16€</strong> — une boisson + accès à volonté au buffet (charcuterie, fromages…).</p>
+      </div>
+    </div>
+  </section>
+
   <!-- EXPERIENCE -->
   <section id="experience" class="section experience">
     <div class="section-head">
@@ -148,12 +178,77 @@
     </div>
   </section>
 
+  <!-- CLICK & COLLECT -->
+  <section id="commander" class="section click-collect">
+    <div class="section-head">
+      <span class="eyebrow">Click &amp; Collect</span>
+      <h2>Commandez, on prépare, vous récupérez</h2>
+      <p class="section-sub">Choisissez vos produits, un créneau de retrait, et réglez directement sur place. Carte provisoire — à venir : la carte définitive.</p>
+    </div>
+
+    <div class="cc-tabs" id="ccTabs"></div>
+    <div class="cc-grid" id="ccGrid"></div>
+  </section>
+
+  <!-- Floating cart button -->
+  <button id="cartButton" class="cart-fab" aria-label="Voir le panier">
+    🛍️ <span id="cartCount" class="cart-count">0</span>
+  </button>
+
+  <!-- Cart drawer -->
+  <div id="cartOverlay" class="cart-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-drawer-head">
+      <h3>Votre commande</h3>
+      <button id="cartClose" class="cart-close" aria-label="Fermer">✕</button>
+    </div>
+
+    <div id="cartItems" class="cart-items"></div>
+
+    <div class="cart-summary">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <strong id="cartTotal">0,00 €</strong>
+      </div>
+      <p class="cart-pay-note">Paiement sur place au retrait.</p>
+    </div>
+
+    <form id="orderForm" class="order-form">
+      <div class="form-field">
+        <label for="ccName">Nom complet</label>
+        <input id="ccName" name="name" type="text" required autocomplete="name" />
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="ccEmail">Email</label>
+          <input id="ccEmail" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="form-field">
+          <label for="ccPhone">Téléphone</label>
+          <input id="ccPhone" name="phone" type="tel" required autocomplete="tel" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-field">
+          <label for="ccDate">Date de retrait</label>
+          <input id="ccDate" name="date" type="date" required />
+        </div>
+        <div class="form-field">
+          <label for="ccTime">Heure de retrait</label>
+          <input id="ccTime" name="time" type="time" required min="06:30" max="23:45" />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-dark btn-submit" id="orderSubmitBtn" disabled>Valider ma commande</button>
+      <p class="form-status" id="orderStatus" role="status"></p>
+    </form>
+  </aside>
+
   <!-- RESERVATION -->
   <section id="reservation" class="section reservation">
     <div class="section-head">
       <span class="eyebrow">Réservation</span>
-      <h2>Réservez votre table pour l'ouverture</h2>
-      <p class="section-sub">Laissez-nous vos coordonnées, nous reviendrons vers vous pour confirmer.</p>
+      <h2>Réservez votre table</h2>
+      <p class="section-sub">Pour déjeuner, prendre un verre ou profiter de l'aperitivo — laissez-nous vos coordonnées, nous confirmons rapidement.</p>
     </div>
 
     <form id="reservationForm" class="reservation-form">
