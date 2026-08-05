@@ -90,9 +90,6 @@ const MENU_ITEMS = [
   { id: 'boissons-chaudes-tilleul', cat: 'boissons-chaudes', icon: '🍵', name: 'Tilleul', price: 3.0 },
   { id: 'boissons-chaudes-verv-menthe', cat: 'boissons-chaudes', icon: '🍵', name: 'Verveine Menthe', price: 3.0 },
   { id: 'boissons-chaudes-till-menthe', cat: 'boissons-chaudes', icon: '🍵', name: 'Tilleul Menthe', price: 3.0 },
-  { id: 'boissons-chaudes-grog', cat: 'boissons-chaudes', icon: '🥃', name: 'Grog', price: 6.5 },
-  { id: 'boissons-chaudes-irish-coffee', cat: 'boissons-chaudes', icon: '🥃', name: 'Irish Coffee', price: 8.0 },
-  { id: 'boissons-chaudes-vin-chaud', cat: 'boissons-chaudes', icon: '🥃', name: 'Vin Chaud', price: 6.5 },
   { id: 'boissons-froides-volvic-50cl', cat: 'boissons-froides', icon: '🥤', name: 'Volvic 50cl', price: 2.2 },
   { id: 'boissons-froides-volvic-citron-50', cat: 'boissons-froides', icon: '🥤', name: 'Volvic Citron 50', price: 2.8 },
   { id: 'boissons-froides-volvic-fraise-50', cat: 'boissons-froides', icon: '🥤', name: 'Volvic Fraise 50', price: 2.8 },
@@ -511,6 +508,20 @@ headerNav.querySelectorAll('a').forEach(link => {
 
 // ===== Footer year =====
 document.getElementById('year').textContent = new Date().getFullYear();
+
+// ===== Google Maps — chargée uniquement au clic (RGPD) =====
+const mapPlaceholder = document.getElementById('mapPlaceholder');
+const mapLoadBtn = document.getElementById('mapLoadBtn');
+
+mapLoadBtn.addEventListener('click', () => {
+  const iframe = document.createElement('iframe');
+  iframe.title = 'Localisation Justin Café';
+  iframe.src = 'https://www.google.com/maps?q=Pavillon%20des%20Quinconces%2C%20Bordeaux&output=embed';
+  iframe.loading = 'lazy';
+  iframe.referrerPolicy = 'no-referrer-when-downgrade';
+  mapPlaceholder.innerHTML = '';
+  mapPlaceholder.appendChild(iframe);
+});
 
 // ===== Reservation form =====
 const form = document.getElementById('reservationForm');

@@ -6,9 +6,6 @@
 <title>Justin Café — Bientôt à Bordeaux</title>
 <meta name="description" content="Justin Café, le nouveau fast casual français à Bordeaux. Pain, café, snacking premium. Ouverture mi-juillet au Pavillon des Quinconces." />
 <link rel="icon" href="assets/img/JUSTIN_LOGO_ILLU_MARRON.svg" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -156,13 +153,12 @@
           <div class="acces-item"><span class="acces-icon">🚊</span><div><strong>Tram</strong><br>Lignes A &amp; B, arrêt Quinconces</div></div>
         </div>
       </div>
-      <div class="ouverture-map">
-        <iframe
-          title="Localisation Justin Café"
-          src="https://www.google.com/maps?q=Pavillon%20des%20Quinconces%2C%20Bordeaux&output=embed"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+      <div class="ouverture-map" id="mapPlaceholder">
+        <button type="button" id="mapLoadBtn" class="map-load-btn">
+          <span class="map-load-icon">📍</span>
+          <span>Afficher la carte</span>
+          <span class="map-load-note">Charge une carte Google Maps (transmet des données à Google)</span>
+        </button>
       </div>
     </div>
   </section>
@@ -318,6 +314,10 @@
     <div class="footer-links">
       <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
       <a href="mailto:contact@justincafe.fr">contact@justincafe.fr</a>
+    </div>
+    <div class="footer-links footer-links-legal">
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="politique-confidentialite.html">Confidentialité</a>
     </div>
     <p class="footer-copy">© <span id="year"></span> Justin Café — Pavillon des Quinconces, Bordeaux</p>
   </footer>
