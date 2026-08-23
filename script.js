@@ -516,60 +516,6 @@ mapLoadBtn.addEventListener('click', () => {
   mapPlaceholder.appendChild(iframe);
 });
 
-// ===== Instagram — chargée uniquement au clic (RGPD) =====
-const instagramGate = document.getElementById('instagramGate');
-const instagramLoadBtn = document.getElementById('instagramLoadBtn');
-const instagramGrid = document.getElementById('instagramGrid');
-
-instagramLoadBtn.addEventListener('click', async () => {
-  instagramLoadBtn.disabled = true;
-  instagramLoadBtn.querySelector('.map-load-note').textContent = 'Chargement…';
-
-  let posts = [];
-  try {
-    const res = await fetch('/api/instagram');
-    if (!res.ok) throw new Error('Request failed');
-    const data = await res.json();
-    posts = Array.isArray(data.posts) ? data.posts.slice(0, 4) : [];
-  } catch (err) {
-    posts = null;
-  }
-
-  instagramGrid.innerHTML = '';
-  if (!posts || posts.length === 0) {
-    const p = document.createElement('p');
-    p.className = 'instagram-error';
-    p.textContent = 'Publications indisponibles pour le moment.';
-    instagramGrid.appendChild(p);
-  } else {
-    posts.forEach(post => {
-      const a = document.createElement('a');
-      a.href = post.permalink;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.className = 'instagram-post';
-
-      const img = document.createElement('img');
-      img.src = post.imageUrl;
-      img.loading = 'lazy';
-      img.alt = post.caption ? post.caption.slice(0, 80) : 'Publication Instagram Justin Café';
-      a.appendChild(img);
-
-      if (post.caption) {
-        const overlay = document.createElement('span');
-        overlay.className = 'instagram-post-overlay';
-        overlay.textContent = post.caption.slice(0, 90);
-        a.appendChild(overlay);
-      }
-
-      instagramGrid.appendChild(a);
-    });
-  }
-
-  instagramGate.hidden = true;
-  instagramGrid.hidden = false;
-});
-
 // ===== Reservation form =====
 const form = document.getElementById('reservationForm');
 const submitBtn = document.getElementById('submitBtn');

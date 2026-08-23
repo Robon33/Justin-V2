@@ -343,14 +343,7 @@
       <span class="eyebrow">Sur Instagram</span>
       <h2>Nos dernières publications</h2>
     </div>
-    <div class="instagram-gate" id="instagramGate">
-      <button type="button" id="instagramLoadBtn" class="map-load-btn">
-        <span class="map-load-icon">📷</span>
-        <span>Afficher nos publications Instagram</span>
-        <span class="map-load-note">Charge du contenu depuis Instagram (transmet des données à Meta)</span>
-      </button>
-    </div>
-    <div class="instagram-grid" id="instagramGrid" hidden></div>
+    <behold-widget feed-id="S3FanFzF5RO7z5pj4oWO"></behold-widget>
     <a href="https://instagram.com" target="_blank" rel="noopener" class="instagram-follow">Nous suivre sur Instagram →</a>
   </section>
 
@@ -370,6 +363,13 @@
 
 </div>
 
+<script>
+  (() => {
+    if(window.__bhldScript)return;window.__bhldScript=true;
+    const d=document,s=d.createElement("script");s.type="module";
+    s.src="https://w.behold.so/widget.js";setTimeout(()=>{d.head.append(s);},0);
+  })();
+</script>
 <script src="script.js"></script>
 </body>
 </html>
