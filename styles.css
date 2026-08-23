@@ -170,6 +170,7 @@ body{overflow-x:hidden;}
 .header-nav{display:flex; align-items:center; gap:2rem;}
 .header-nav a{font-size:.92rem; font-weight:500; color:var(--brown-dark);}
 .header-nav a:not(.btn):hover{color:var(--taupe);}
+.header-nav a.btn-dark{color:var(--cream);}
 .nav-toggle{
   display:none;
   background:none; border:none;
@@ -708,6 +709,47 @@ body{overflow-x:hidden;}
 .map-load-icon{font-size:1.8rem;}
 .map-load-note{font-weight:400; font-size:.78rem; color:var(--taupe); max-width:280px;}
 
+/* ===== Instagram ===== */
+.instagram{max-width:1100px; margin:0 auto; text-align:center;}
+.instagram-gate{
+  max-width:760px;
+  margin:0 auto 2rem;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  min-height:160px;
+}
+.instagram-grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:1.2rem;
+  margin-bottom:1.6rem;
+}
+.instagram-post{
+  position:relative;
+  display:block;
+  aspect-ratio:1/1;
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.instagram-post img{width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s ease;}
+.instagram-post:hover img{transform:scale(1.06);}
+.instagram-post-overlay{
+  position:absolute; inset:auto 0 0 0;
+  padding:.7rem .8rem;
+  background:linear-gradient(180deg, transparent, rgba(0,0,0,.7));
+  color:var(--white);
+  font-size:.76rem;
+  text-align:left;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+.instagram-post:hover .instagram-post-overlay{opacity:1;}
+.instagram-error{grid-column:1/-1; color:var(--taupe); font-size:.9rem;}
+.instagram-follow{display:inline-block; color:var(--brown-dark); font-weight:600; font-size:.95rem;}
+.instagram-follow:hover{color:var(--taupe);}
+
 /* ===== Reservation ===== */
 .reservation{max-width:760px; margin:0 auto;}
 .reservation-form{
@@ -766,6 +808,7 @@ body{overflow-x:hidden;}
   .offre-grid{grid-template-columns:1fr; gap:2rem;}
   .moments-grid{grid-template-columns:1fr 1fr;}
   .horaires-grid{grid-template-columns:1fr 1fr;}
+  .instagram-grid{grid-template-columns:1fr 1fr;}
   .cc-grid{grid-template-columns:1fr 1fr;}
   .sandwich-grid{grid-template-columns:1fr 1fr;}
   .formules-grid{grid-template-columns:1fr;}
