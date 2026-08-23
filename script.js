@@ -254,7 +254,7 @@ function openConfigurator(formula) {
   const configDessert = document.getElementById('ccConfigDessert');
 
   configTitle.textContent = formula.name;
-  configPrice.textContent = `${formatPrice(formula.price)} — prix fixe quel que soit votre choix`;
+  configPrice.textContent = `${formatPrice(formula.price)}, prix fixe quel que soit votre choix`;
 
   configPlat.innerHTML = PLAT_CATEGORIES.map(cat => {
     const items = MENU_ITEMS.filter(i => i.cat === cat);
@@ -287,7 +287,7 @@ function confirmConfigurator() {
 
   const lineId = `${currentFormula.id}__${platItem.id}__${boissonItem.id}__${dessertItem ? dessertItem.id : ''}`;
   addToCart(lineId, {
-    name: `${currentFormula.name} — ${parts.join(' + ')}`,
+    name: `${currentFormula.name} : ${parts.join(' + ')}`,
     price: currentFormula.price,
     icon: currentFormula.icon,
   });
@@ -472,27 +472,20 @@ function initClickAndCollect() {
   });
 }
 
-initClickAndCollect();
+// Le Click & Collect en ligne est mis en pause (sera réactivé en iframe).
+// Le code et les données sont conservés tels quels : on repasse juste le flag à true.
+const SHOW_CLICK_AND_COLLECT = false;
+if (SHOW_CLICK_AND_COLLECT) {
+  initClickAndCollect();
+}
 
-// ===== Splash → Site reveal =====
-const splash = document.getElementById('splash');
+// ===== Splash → Site scroll =====
 const site = document.getElementById('site');
 const discoverBtn = document.getElementById('discoverBtn');
 
-function revealSite() {
-  site.classList.add('revealed');
-  document.body.classList.add('site-active');
+discoverBtn.addEventListener('click', () => {
   site.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-discoverBtn.addEventListener('click', revealSite);
-
-// If user scrolls past the splash manually, reveal too
-window.addEventListener('wheel', (e) => {
-  if (!site.classList.contains('revealed') && e.deltaY > 0) {
-    revealSite();
-  }
-}, { passive: true });
+});
 
 // ===== Mobile nav toggle =====
 const navToggle = document.getElementById('navToggle');

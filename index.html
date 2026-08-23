@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Justin Café — Bientôt à Bordeaux</title>
-<meta name="description" content="Justin Café, le nouveau fast casual français à Bordeaux. Pain, café, snacking premium. Ouverture mi-juillet au Pavillon des Quinconces." />
+<title>Justin Café, à Bordeaux</title>
+<meta name="description" content="Justin Café à Bordeaux : café le matin, sandwichs signature le midi, salon de thé l'après-midi, apéro le soir. Un seul lieu pour toute la journée, au Pavillon des Quinconces." />
 <link rel="icon" href="assets/img/JUSTIN_LOGO_ILLU_MARRON.svg" />
 <link rel="stylesheet" href="styles.css" />
 </head>
@@ -15,8 +15,8 @@
   <div class="splash-bg"></div>
   <div class="splash-content">
     <img src="assets/img/JUSTIN_JUSTIN_BLANC.svg" alt="Justin Café" class="splash-logo" />
-    <p class="splash-tag">Fast casual à la française</p>
-    <p class="splash-open">Ouverture mi-juillet — Pavillon des Quinconces, Bordeaux</p>
+    <p class="splash-tag">Matin, midi, goûter, apéro : tout ça, juste ici.</p>
+    <p class="splash-open">Pavillon des Quinconces, Bordeaux</p>
     <button id="discoverBtn" class="btn btn-outline-light">Découvrir</button>
   </div>
   <div class="splash-scroll-hint" aria-hidden="true"></div>
@@ -33,7 +33,9 @@
       <a href="#concept">Le concept</a>
       <a href="#offre">La carte</a>
       <a href="#horaires">Horaires</a>
+      <!-- Click & Collect en pause (SHOW_CLICK_AND_COLLECT dans script.js) — sera réactivé en iframe.
       <button type="button" class="link-btn js-open-order">Click &amp; Collect</button>
+      -->
       <a href="#reservation" class="btn btn-dark btn-sm">Réserver</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">☰</button>
@@ -44,9 +46,11 @@
     <div class="hero-inner">
       <img src="assets/img/JUSTIN_LOGO_ILLU_JUSTIN_MARRON.svg" alt="" class="hero-illu" />
       <h1>Le bon pain,<br>le vrai café,<br>en deux minutes.</h1>
-      <p class="hero-sub">Justin Café ouvre bientôt à Bordeaux. Un nouveau format de restauration rapide à l'ADN profondément français — entre boulangerie, café de quartier et snacking premium. Pensé pour les actifs pressés, les amoureux du bon café et tous ceux qui n'ont pas envie de choisir entre rapidité et qualité.</p>
+      <p class="hero-sub">Justin Café vous accueille à Bordeaux. Ici, on ne fait pas qu'un café ou qu'un sandwich : on couvre toute votre journée. Café le matin, sandwich signature le midi, pause gourmande l'après-midi, apéro qui tient ses promesses le soir. Un seul lieu, quatre bonnes raisons d'y revenir.</p>
       <div class="hero-cta">
+        <!-- Click & Collect en pause (SHOW_CLICK_AND_COLLECT dans script.js) — sera réactivé en iframe.
         <button type="button" class="btn btn-dark js-open-order">Commander en click &amp; collect</button>
+        -->
         <a href="#reservation" class="btn btn-ghost">Réserver une table</a>
       </div>
     </div>
@@ -56,8 +60,8 @@
   <section id="concept" class="section concept">
     <div class="section-head">
       <span class="eyebrow">Le concept</span>
-      <h2>Un fast casual qui ne sacrifie rien</h2>
-      <p class="section-sub">Justin Café est né d'un constat simple : la restauration rapide n'a pas besoin d'être industrielle pour être rapide. Entre la sandwicherie low-cost et le restaurant traditionnel, il manquait un lieu où l'on mange bien, vite, et où l'on a aussi envie de s'arrêter pour un café ou un verre. C'est exactement cet espace que nous occupons.</p>
+      <h2>Juste rapide, jamais bâclé</h2>
+      <p class="section-sub">Justin Café est né d'un constat simple : la restauration rapide n'a pas besoin d'être industrielle pour être bonne. Entre la sandwicherie à bas prix et le restaurant traditionnel, il manquait un lieu où l'on mange bien, vite, du café du matin à l'apéro du soir. C'est exactement cet espace que nous occupons.</p>
     </div>
     <div class="concept-grid">
       <div class="concept-card">
@@ -68,25 +72,48 @@
       <div class="concept-card">
         <img src="assets/img/illu-sandwich.svg" alt="" class="concept-icon" />
         <h3>Gourmand &amp; français</h3>
-        <p>Du bon pain, une carte lisible, une vraie culture du café. Justin Café revendique une identité française forte, moderne et accessible — sans jargon, sans chichi, juste de bons produits.</p>
+        <p>Du bon pain, une carte lisible, une vraie culture du café. Justin Café revendique une identité française forte, moderne et accessible : sans jargon, sans chichi, juste de bons produits.</p>
       </div>
       <div class="concept-card">
         <img src="assets/img/illu-quinconces.svg" alt="" class="concept-icon concept-icon-wide" />
-        <h3>Premier d'une série</h3>
-        <p>Bordeaux est le site pilote. Un concept pensé dès le départ pour être dupliqué, avec une exploitation structurée et reproductible — process, bornes de commande et organisation pensés pour tenir la cadence partout où Justin Café s'installera ensuite.</p>
+        <h3>En plein Pavillon des Quinconces</h3>
+        <p>Sur l'une des plus grandes places d'Europe, au carrefour du patrimoine bordelais et d'une restauration pensée pour aujourd'hui.</p>
       </div>
     </div>
   </section>
 
-  <!-- BANNIÈRE CLICK & COLLECT -->
+  <!-- LA CARTE — 4 TEMPS DE LA JOURNÉE -->
   <section id="offre" class="section offre-banner">
-    <div class="offre-banner-inner">
-      <div>
-        <span class="eyebrow">La carte</span>
-        <h2>Sandwichs signature, formules, café & plus</h2>
-        <p>Toute la carte — sandwichs, salades, snacking, douceurs, boissons — et nos formules à composer (Plat + Boisson, Plat + Boisson + Dessert) sont dans le click &amp; collect.</p>
+    <div class="moments-head">
+      <span class="eyebrow">La carte</span>
+      <h2>Un lieu, quatre ambiances</h2>
+      <p>Justin Café change de rythme avec la journée : jamais tout à fait la même carte, jamais tout à fait la même ambiance.</p>
+    </div>
+    <div class="moments-grid">
+      <div class="moment-card">
+        <span class="moment-icon">☕</span>
+        <span class="moment-time">Le matin</span>
+        <h3>Café et viennoiserie, sans blabla</h3>
+        <p>Pour les actifs qui enchaînent : un café qui a du goût, une viennoiserie qui tient ses promesses, servis vite et bien.</p>
       </div>
-      <button type="button" class="btn btn-dark js-open-order">Voir la carte &amp; commander</button>
+      <div class="moment-card">
+        <span class="moment-icon">🥪</span>
+        <span class="moment-time">Le midi</span>
+        <h3>Sandwichs signature, recettes inventives</h3>
+        <p>Du bon pain, des associations qui sortent de l'ordinaire, des salades fraîches, des croque-monsieur et des paninis généreux.</p>
+      </div>
+      <div class="moment-card">
+        <span class="moment-icon">🍵</span>
+        <span class="moment-time">L'après-midi</span>
+        <h3>Ambiance salon de thé</h3>
+        <p>On ralentit le rythme. Matcha, ubé, chai latte : des boissons tendance à savourer tranquillement.</p>
+      </div>
+      <div class="moment-card">
+        <span class="moment-icon">🥂</span>
+        <span class="moment-time">Le soir</span>
+        <h3>Ambiance apéro</h3>
+        <p>Planches exceptionnelles, jambon et poulet croustillant de qualité, cocktails et bières : la fin de journée se fête.</p>
+      </div>
     </div>
   </section>
 
@@ -103,19 +130,19 @@
         <p>Jeudi &amp; vendredi, on reste ouvert jusqu'à minuit.</p>
       </div>
       <div class="horaire-card highlight">
-        <h3>Happy Hour</h3>
+        <h3>L'heure apéro</h3>
         <p class="horaire-time">17h – 20h</p>
         <p>Tous les jours, sur une sélection de boissons.</p>
       </div>
       <div class="horaire-card">
-        <h3>Brunch</h3>
+        <h3>La grasse matinée gourmande</h3>
         <p class="horaire-time">Dimanche · 10h – 16h</p>
-        <p>Une formule brunch complète, à savourer sans se presser.</p>
+        <p>Une formule complète, à savourer sans se presser.</p>
       </div>
       <div class="horaire-card highlight">
         <h3>Aperitivo</h3>
         <p class="horaire-time">Jeudi &amp; samedi · 18h – 21h</p>
-        <p><strong>16€</strong> — une boisson + accès à volonté au buffet (charcuterie, fromages…).</p>
+        <p><strong>16€</strong> : une boisson + accès à volonté au buffet (charcuterie, fromages…).</p>
       </div>
     </div>
   </section>
@@ -125,7 +152,7 @@
     <div class="section-head">
       <span class="eyebrow">L'expérience</span>
       <h2>Pensé pour aller vite, sans perdre en clarté</h2>
-      <p class="section-sub">De la commande à la remise du plateau, chaque étape est pensée pour que vous repartiez vite — sans avoir l'impression d'avoir été traité comme un numéro. Le parcours est le même que vous commandiez en borne, en caisse ou en click &amp; collect.</p>
+      <p class="section-sub">De la commande à la remise du plateau, chaque étape est pensée pour que vous repartiez vite, sans avoir l'impression d'avoir été traité comme un numéro. Le parcours est le même que vous commandiez en borne ou en caisse.</p>
     </div>
     <div class="experience-steps">
       <div class="step"><span class="step-n">01</span><h3>Sur place ou à emporter</h3><p>Le client choisit dès l'arrivée, en borne ou en caisse.</p></div>
@@ -135,18 +162,17 @@
     </div>
   </section>
 
-  <!-- OUVERTURE / LOCALISATION -->
+  <!-- LOCALISATION -->
   <section id="ouverture" class="section ouverture">
     <div class="ouverture-grid">
       <div class="ouverture-text">
         <img src="assets/img/illu-quinconces.svg" alt="" class="ouverture-illu" />
-        <span class="eyebrow">Ouverture</span>
-        <h2>Mi-juillet, au Pavillon des Quinconces</h2>
-        <p>Justin Café s'installe en plein cœur de Bordeaux, sur l'une des plus grandes places d'Europe. Un emplacement choisi pour son passage — actifs du quartier, touristes, étudiants — et pour incarner dès l'ouverture l'esprit du concept : au carrefour du patrimoine bordelais et d'une restauration pensée pour aujourd'hui.</p>
-        <p>Les travaux avancent, l'équipe se forme, la carte se finalise. Suivez l'avancée du chantier sur nos réseaux et réservez déjà votre table pour les premiers jours.</p>
+        <span class="eyebrow">Nous trouver</span>
+        <h2>Au Pavillon des Quinconces</h2>
+        <p>Justin Café est installé en plein cœur de Bordeaux, sur l'une des plus grandes places d'Europe. Un emplacement choisi pour son passage (actifs du quartier, touristes, étudiants) et pour incarner l'esprit du concept : au carrefour du patrimoine bordelais et d'une restauration pensée pour aujourd'hui.</p>
+        <p>Toute l'équipe vous attend pour un café, un déjeuner ou un verre. Réservez votre table ou passez nous voir directement.</p>
         <ul class="ouverture-infos">
-          <li><strong>Adresse</strong> — Pavillon des Quinconces, Bordeaux (ancien Relais H, entre les deux arrêts de tram)</li>
-          <li><strong>Ouverture</strong> — Mi-juillet 2026</li>
+          <li><strong>Adresse :</strong> Pavillon des Quinconces, Bordeaux (ancien Relais H, entre les deux arrêts de tram)</li>
         </ul>
         <div class="acces-grid">
           <div class="acces-item"><span class="acces-icon">📍</span><div><strong>Adresse</strong><br>Pavillon des Quinconces, à côté des bureaux TBM</div></div>
@@ -163,7 +189,8 @@
     </div>
   </section>
 
-  <!-- CLICK & COLLECT — pop-up -->
+  <!-- CLICK & COLLECT — en pause (SHOW_CLICK_AND_COLLECT dans script.js), sera réactivé en iframe.
+       Markup conservé tel quel pour ne pas perdre le travail déjà fait.
   <div id="orderModalOverlay" class="cart-overlay"></div>
   <div id="orderModal" class="order-modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
     <div class="order-modal-head">
@@ -206,12 +233,12 @@
     </div>
   </div>
 
-  <!-- Floating cart button -->
+  Floating cart button :
   <button id="cartButton" class="cart-fab" aria-label="Voir le panier">
     🛍️ <span id="cartCount" class="cart-count">0</span>
   </button>
 
-  <!-- Cart drawer -->
+  Cart drawer :
   <div id="cartOverlay" class="cart-overlay"></div>
   <aside id="cartDrawer" class="cart-drawer">
     <div class="cart-drawer-head">
@@ -236,7 +263,7 @@
       </div>
       <div class="form-row">
         <div class="form-field">
-          <label for="ccEmail">Email</label>
+          <label for="ccEmail">E-mail</label>
           <input id="ccEmail" name="email" type="email" required autocomplete="email" />
         </div>
         <div class="form-field">
@@ -258,13 +285,15 @@
       <p class="form-status" id="orderStatus" role="status"></p>
     </form>
   </aside>
+  -->
+
 
   <!-- RESERVATION -->
   <section id="reservation" class="section reservation">
     <div class="section-head">
       <span class="eyebrow">Réservation</span>
       <h2>Réservez votre table</h2>
-      <p class="section-sub">Pour déjeuner, prendre un verre ou profiter de l'aperitivo — laissez-nous vos coordonnées, nous confirmons rapidement.</p>
+      <p class="section-sub">Pour déjeuner, prendre un verre ou profiter de l'aperitivo, laissez-nous vos coordonnées, nous confirmons rapidement.</p>
     </div>
 
     <form id="reservationForm" class="reservation-form">
@@ -274,7 +303,7 @@
           <input id="name" name="name" type="text" required autocomplete="name" />
         </div>
         <div class="form-field">
-          <label for="email">Email</label>
+          <label for="email">E-mail</label>
           <input id="email" name="email" type="email" required autocomplete="email" />
         </div>
       </div>
@@ -319,7 +348,7 @@
       <a href="mentions-legales.html">Mentions légales</a>
       <a href="politique-confidentialite.html">Confidentialité</a>
     </div>
-    <p class="footer-copy">© <span id="year"></span> Justin Café — Pavillon des Quinconces, Bordeaux</p>
+    <p class="footer-copy">© <span id="year"></span> Justin Café, Pavillon des Quinconces, Bordeaux</p>
   </footer>
 
 </div>

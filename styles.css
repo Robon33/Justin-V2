@@ -151,16 +151,7 @@ ul{margin:0; padding:0; list-style:none;}
 }
 
 /* ===== Site reveal ===== */
-#site{
-  opacity:0;
-  visibility:hidden;
-  transition:opacity .6s ease;
-}
-#site.revealed{
-  opacity:1;
-  visibility:visible;
-}
-body.site-active{overflow-x:hidden;}
+body{overflow-x:hidden;}
 
 /* ===== Header ===== */
 .site-header{
@@ -279,6 +270,39 @@ body.site-active{overflow-x:hidden;}
 .offre-banner-inner h2{color:var(--white); font-size:1.6rem; margin-bottom:.4em;}
 .offre-banner-inner p{color:rgba(255,255,255,.75); margin:0; max-width:520px; font-size:.95rem;}
 .offre-banner-inner .btn{flex-shrink:0;}
+
+/* ===== La carte — 4 temps de la journée ===== */
+.moments-head{max-width:680px; margin:0 auto 2.6rem; text-align:center;}
+.moments-head h2{color:var(--white); font-size:clamp(1.7rem, 3.4vw, 2.4rem); margin-bottom:.4em;}
+.moments-head p{color:rgba(255,255,255,.75); margin:0; font-size:.98rem;}
+.moments-grid{
+  max-width:1100px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap:1.4rem;
+}
+.moment-card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--radius);
+  padding:1.8rem 1.5rem;
+  text-align:center;
+  transition:transform .2s ease, background .2s ease;
+}
+.moment-card:hover{transform:translateY(-4px); background:rgba(255,255,255,.1);}
+.moment-icon{font-size:2rem; display:block; margin-bottom:.6rem;}
+.moment-time{
+  display:block;
+  font-family:var(--serif);
+  font-size:.85rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#e8c9a0;
+  margin-bottom:.4em;
+}
+.moment-card h3{color:var(--white); font-size:1.05rem; margin-bottom:.5em;}
+.moment-card p{color:rgba(255,255,255,.75); font-size:.88rem; margin:0;}
 
 /* ===== Offre (legacy, conservé pour référence) ===== */
 .offre{background:var(--brown-dark); color:var(--white);}
@@ -740,6 +764,7 @@ body.site-active{overflow-x:hidden;}
 @media (max-width: 900px){
   .concept-grid{grid-template-columns:1fr;}
   .offre-grid{grid-template-columns:1fr; gap:2rem;}
+  .moments-grid{grid-template-columns:1fr 1fr;}
   .horaires-grid{grid-template-columns:1fr 1fr;}
   .cc-grid{grid-template-columns:1fr 1fr;}
   .sandwich-grid{grid-template-columns:1fr 1fr;}
@@ -768,6 +793,7 @@ body.site-active{overflow-x:hidden;}
   .section{padding:4.5rem 1.4rem;}
   .hero{padding:5rem 1.4rem 4rem;}
   .site-header{padding:1rem 1.4rem;}
+  .moments-grid{grid-template-columns:1fr;}
   .horaires-grid{grid-template-columns:1fr;}
   .cc-grid{grid-template-columns:1fr;}
   .sandwich-grid{grid-template-columns:1fr;}
