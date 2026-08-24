@@ -509,9 +509,9 @@ const mapLoadBtn = document.getElementById('mapLoadBtn');
 mapLoadBtn.addEventListener('click', () => {
   const iframe = document.createElement('iframe');
   iframe.title = 'Localisation Justin Café';
-  iframe.src = 'https://www.google.com/maps?q=Pavillon%20des%20Quinconces%2C%20Bordeaux&output=embed';
+  iframe.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2828.8869061897317!2d-0.5766568238931475!3d44.844236471070545!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd552780fe49ed47%3A0x5c1f4a20c28f82f8!2sJustin%20Bordeaux!5e0!3m2!1sfr!2sfr!4v1787552950885!5m2!1sfr!2sfr';
   iframe.loading = 'lazy';
-  iframe.referrerPolicy = 'no-referrer-when-downgrade';
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
   mapPlaceholder.innerHTML = '';
   mapPlaceholder.appendChild(iframe);
 });
