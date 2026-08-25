@@ -479,12 +479,12 @@ if (SHOW_CLICK_AND_COLLECT) {
   initClickAndCollect();
 }
 
-// ===== Splash → Site scroll =====
-const site = document.getElementById('site');
+// ===== Splash → Réservation scroll =====
+const reservationSection = document.getElementById('reservation');
 const discoverBtn = document.getElementById('discoverBtn');
 
 discoverBtn.addEventListener('click', () => {
-  site.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  reservationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
 // ===== Mobile nav toggle =====
