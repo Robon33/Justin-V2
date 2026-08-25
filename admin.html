@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin réservations · Justin Café</title>
+<style>
+  :root{
+    --brown-dark:#30221d;
+    --cream:#f7f2ec;
+    --white:#ffffff;
+    --taupe:#8a7a6c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background:var(--cream);
+    color:var(--brown-dark);
+    padding:2rem 1.2rem;
+  }
+  .wrap{max-width:420px; margin:0 auto;}
+  h1{font-size:1.3rem; margin-bottom:1.5rem;}
+  label{display:block; font-size:.85rem; font-weight:600; margin-bottom:.4em;}
+  input{
+    width:100%;
+    padding:.7em .9em;
+    border:1px solid #d8cbba;
+    border-radius:8px;
+    font-size:1rem;
+    margin-bottom:1rem;
+    font-family:inherit;
+  }
+  button{
+    width:100%;
+    padding:.8em;
+    border:none;
+    border-radius:8px;
+    background:var(--brown-dark);
+    color:var(--cream);
+    font-weight:600;
+    font-size:.95rem;
+    cursor:pointer;
+    margin-bottom:.6rem;
+  }
+  button:hover{opacity:.9;}
+  button.secondary{background:transparent; border:1px solid var(--brown-dark); color:var(--brown-dark);}
+  .card{
+    background:var(--white);
+    border-radius:12px;
+    padding:1.4rem;
+    box-shadow:0 4px 16px rgba(0,0,0,.06);
+    margin-bottom:1.2rem;
+  }
+  .result{font-size:1rem; line-height:1.6; display:none;}
+  .result.visible{display:block;}
+  .result strong{font-size:1.4rem;}
+  .status{font-size:.85rem; color:var(--taupe); margin-top:.5rem; min-height:1.2em;}
+  .status.error{color:#b3372c;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Réservations, disponibilités</h1>
+
+  <div class="card">
+    <label for="token">Mot de passe admin</label>
+    <input id="token" type="password" placeholder="•••••••••" autocomplete="off" />
+  </div>
+
+  <div class="card">
+    <label for="date">Date</label>
+    <input id="date" type="date" />
+    <button id="checkBtn">Vérifier les places restantes</button>
+    <div class="result" id="result">
+      <div><strong id="remaining">–</strong> places restantes sur <span id="capacity">120</span></div>
+      <div id="reservedLine"></div>
+    </div>
+    <div class="status" id="checkStatus"></div>
+  </div>
+
+  <div class="card">
+    <label for="reservedInput">Corriger le nombre déjà réservé pour cette date</label>
+    <input id="reservedInput" type="number" min="0" placeholder="ex. 63" />
+    <button id="saveBtn" class="secondary">Mettre à jour</button>
+    <div class="status" id="saveStatus"></div>
+  </div>
+</div>
+
+<script>
+  const tokenInput = document.getElementById('token');
+  const dateInput = document.getElementById('date');
+  const checkBtn = document.getElementById('checkBtn');
+  const saveBtn = document.getElementById('saveBtn');
+  const result = document.getElementById('result');
+  const remainingEl = document.getElementById('remaining');
+  const capacityEl = document.getElementById('capacity');
+  const reservedLine = document.getElementById('reservedLine');
+  const checkStatus = document.getElementById('checkStatus');
+  const saveStatus = document.getElementById('saveStatus');
+  const reservedInput = document.getElementById('reservedInput');
+
+  const savedToken = localStorage.getItem('justin_admin_token');
+  if (savedToken) tokenInput.value = savedToken;
+
+  dateInput.value = new Date().toISOString().slice(0, 10);
+
+  async function callApi(method, extraBody) {
+    const token = tokenInput.value.trim();
+    if (!token) throw new Error('Mot de passe requis');
+
+    const date = dateInput.value;
+    if (!date) throw new Error('Date requise');
+
+    const url = method === 'GET'
+      ? `/api/availability?date=${encodeURIComponent(date)}`
+      : '/api/availability';
+
+    const res = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...(method === 'POST' ? { 'Content-Type': 'application/json' } : {}),
+      },
+      body: method === 'POST' ? JSON.stringify({ date, ...extraBody }) : undefined,
+    });
+
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.error === 'Unauthorized' ? 'Mot de passe incorrect' : (data.error || 'Erreur serveur'));
+    }
+    localStorage.setItem('justin_admin_token', token);
+    return data;
+  }
+
+  checkBtn.addEventListener('click', async () => {
+    checkStatus.textContent = '';
+    checkStatus.className = 'status';
+    result.classList.remove('visible');
+    try {
+      const data = await callApi('GET');
+      remainingEl.textContent = data.remaining;
+      capacityEl.textContent = data.capacity;
+      reservedLine.textContent = `${data.reserved} déjà réservés`;
+      reservedInput.value = data.reserved;
+      result.classList.add('visible');
+    } catch (err) {
+      checkStatus.textContent = err.message;
+      checkStatus.classList.add('error');
+    }
+  });
+
+  saveBtn.addEventListener('click', async () => {
+    saveStatus.textContent = '';
+    saveStatus.className = 'status';
+    const val = reservedInput.value;
+    if (val === '' || Number(val) < 0) {
+      saveStatus.textContent = 'Entre un nombre valide';
+      saveStatus.classList.add('error');
+      return;
+    }
+    try {
+      const data = await callApi('POST', { reserved: Number(val) });
+      remainingEl.textContent = data.remaining;
+      capacityEl.textContent = data.capacity;
+      reservedLine.textContent = `${data.reserved} déjà réservés`;
+      result.classList.add('visible');
+      saveStatus.textContent = 'Mis à jour.';
+    } catch (err) {
+      saveStatus.textContent = err.message;
+      saveStatus.classList.add('error');
+    }
+  });
+</script>
+</body>
+</html>
