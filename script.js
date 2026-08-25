@@ -537,13 +537,18 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(data),
     });
 
-    if (!res.ok) throw new Error('Request failed');
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.message || 'Request failed');
+    }
 
     statusEl.textContent = 'Merci ! Votre demande de réservation a bien été envoyée. Nous vous recontactons rapidement.';
     statusEl.classList.add('success');
     form.reset();
   } catch (err) {
-    statusEl.textContent = 'Une erreur est survenue. Merci de réessayer ou de nous contacter directement par mail.';
+    statusEl.textContent = err.message && err.message !== 'Request failed'
+      ? err.message
+      : 'Une erreur est survenue. Merci de réessayer ou de nous contacter directement par mail.';
     statusEl.classList.add('error');
   } finally {
     submitBtn.disabled = false;
