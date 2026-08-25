@@ -70,7 +70,7 @@ export default async function handler(req, res) {
   }
 
   const html = `
-    <h2>Nouvelle demande de réservation — Justin Café</h2>
+    <h2>Nouvelle demande de réservation, Justin Café</h2>
     <p><strong>Nom :</strong> ${escapeHtml(name)}</p>
     <p><strong>Email :</strong> ${escapeHtml(email)}</p>
     <p><strong>Téléphone :</strong> ${escapeHtml(phone)}</p>
@@ -78,6 +78,18 @@ export default async function handler(req, res) {
     <p><strong>Date :</strong> ${escapeHtml(date)}</p>
     <p><strong>Heure :</strong> ${escapeHtml(time)}</p>
     <p><strong>Message :</strong> ${message ? escapeHtml(message) : 'Aucun'}</p>
+  `;
+
+  const confirmationHtml = `
+    <h2>Merci ${escapeHtml(name)}, on a bien reçu votre demande !</h2>
+    <p>Voici le récapitulatif de votre demande de réservation chez Justin Café :</p>
+    <ul>
+      <li><strong>Date :</strong> ${escapeHtml(date)}</li>
+      <li><strong>Heure :</strong> ${escapeHtml(time)}</li>
+      <li><strong>Personnes :</strong> ${escapeHtml(String(guests))}</li>
+    </ul>
+    <p>Notre équipe vous recontacte rapidement pour confirmer. Une question avant ça ? Répondez directement à cet email ou appelez-nous.</p>
+    <p>À très vite,<br>L'équipe Justin Café</p>
   `;
 
   try {
@@ -91,7 +103,7 @@ export default async function handler(req, res) {
         from,
         to,
         reply_to: email,
-        subject: `Réservation Justin Café — ${name} (${guests} pers., ${date} ${time})`,
+        subject: `Réservation Justin Café, ${name} (${guests} pers., ${date} ${time})`,
         html,
       }),
     });
@@ -103,6 +115,27 @@ export default async function handler(req, res) {
         await kvCommand(kvUrl, kvToken, ['DECRBY', capacityKey, guestsNum]).catch(() => {});
       }
       return res.status(502).json({ error: 'Email provider error' });
+    }
+
+    // Best-effort confirmation to the customer: a failure here shouldn't fail the
+    // reservation itself, since the owner has already been notified. Awaited (rather than
+    // fired-and-forgotten) because Vercel can freeze the function as soon as a response is sent.
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from,
+          to: email,
+          subject: 'Votre demande de réservation chez Justin Café',
+          html: confirmationHtml,
+        }),
+      });
+    } catch (err) {
+      console.error('Customer confirmation email error:', err);
     }
 
     return res.status(200).json({ ok: true });
