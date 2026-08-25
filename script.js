@@ -542,7 +542,7 @@ form.addEventListener('submit', async (e) => {
       throw new Error(body.message || 'Request failed');
     }
 
-    statusEl.textContent = 'Merci ! Votre demande de réservation a bien été envoyée. Nous vous recontactons rapidement.';
+    statusEl.textContent = 'Merci ! Votre réservation est confirmée. Vous allez recevoir un email récapitulatif dans quelques instants.';
     statusEl.classList.add('success');
     form.reset();
   } catch (err) {

@@ -81,14 +81,14 @@ export default async function handler(req, res) {
   `;
 
   const confirmationHtml = `
-    <h2>Merci ${escapeHtml(name)}, on a bien reçu votre demande !</h2>
-    <p>Voici le récapitulatif de votre demande de réservation chez Justin Café :</p>
+    <h2>Merci ${escapeHtml(name)}, votre table est confirmée !</h2>
+    <p>Voici le récapitulatif de votre réservation chez Justin Café :</p>
     <ul>
       <li><strong>Date :</strong> ${escapeHtml(date)}</li>
       <li><strong>Heure :</strong> ${escapeHtml(time)}</li>
       <li><strong>Personnes :</strong> ${escapeHtml(String(guests))}</li>
     </ul>
-    <p>Notre équipe vous recontacte rapidement pour confirmer. Une question avant ça ? Répondez directement à cet email ou appelez-nous.</p>
+    <p>Une question, un empêchement ou besoin de modifier l'heure ? Répondez directement à cet email ou appelez-nous.</p>
     <p>À très vite,<br>L'équipe Justin Café</p>
   `;
 
